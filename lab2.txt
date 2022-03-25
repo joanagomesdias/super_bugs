@@ -1,0 +1,45 @@
+#LAB 2
+
+## DATA SET ###################################################################
+
+data <- "ECDC_surveillance_data_Antimicrobial_resistance2.csv"
+data <- read.csv(data, header=T)
+
+data$Population <- as.factor(data$Population)
+data$Indicator <- as.factor(data$Indicator)
+data$RegionCode <- as.factor(data$RegionCode)
+data$Unit <- as.factor(data$Un)
+data$NumValue <- as.numeric(data$NumValue)
+
+data$HealthTopic <- NULL
+data$TxtValue <- NULL
+data$RegionName <- NULL
+
+# Dividir a variável "Population" em "Microorganism" e "Antimicrobial"
+
+library(stringr)
+datapop1 <- as.data.frame(data$Population)
+colnames(datapop1) <- c("Population")
+datapop2 <- str_split_fixed(datapop1$Population, coll("|"), 2)
+datapop2 <- as.data.frame(datapop2)
+colnames(datapop2) <- c("Microorganism", "Antimicrobial")
+data <- cbind(data,datapop2)
+rm(datapop1)
+rm(datapop2)
+
+data$Microorganism <- as.factor(data$Microorganism)
+data$Antimicrobial <- as.factor(data$Antimicrobial)
+
+
+data <- data[,c(5,1,7,8,2,4,3,6)]
+
+# Retirar as observações de S e I no "Indicator" (só interessam percentagens, numeroador e denominador)
+data <- droplevels(data[!data$Indicator == "I - 'susceptible, increased exposure' isolates ",])
+data <- droplevels(data[!data$Indicator == "S - susceptible isolates",])
+data <- droplevels(data[!data$Indicator == "Completeness age",])
+data <- droplevels(data[!data$Indicator == "Completeness gender",])
+data <- droplevels(data[!data$Indicator == "R - resistant isolates",])
+data <- droplevels(data[!data$Indicator == "Total tested isolates",])
+
+
+
