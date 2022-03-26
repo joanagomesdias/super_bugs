@@ -15,6 +15,7 @@ if (!require("pacman")) install.packages("pacman")
 # # Packages available from CRAN
  pacman::p_load(
     readr,
+    dplyr,
     ggplot2,
     broom)
 
@@ -25,14 +26,16 @@ amr <- read_delim("data/dataset_amr.csv",
                            ";", escape_double = FALSE, locale = locale(decimal_mark = ","), 
                            trim_ws = TRUE)
 
+amr2014_2020 <- amr %>% 
+  filter(ano <= 2020)
 
 # Linear model regression ------------------------------------------------------
 ## Consumption -----
-ggplot(amr) + 
+ggplot(amr2014_2020) + 
    geom_histogram(mapping = aes(x = consumo_ddd_hab_day)) + 
    xlab("Consumo ddd hab day")
 # Linear regression between consumption and time
-lm.comsumption <- lm(consumo_ddd_hab_day ~ ano, data = amr)
+lm.comsumption <- lm(consumo_ddd_hab_day ~ ano, data = amr2014_2020)
 # Summary in table form
 tidy(lm.comsumption, conf.int = TRUE)
 # Creates a new data frame with the original data and the model values added
@@ -44,11 +47,11 @@ ggplot(lm.comsumption_dt) +
 
 
 ## Resistance -----
-ggplot(amr) + 
+ggplot(amr2014_2020) + 
   geom_histogram(mapping = aes(x = resistencias_crkp_perc)) + 
   xlab("Resistencias crkp (%)")
 # Linear regression between resistance and time
-lm.resistence <- lm(resistencias_crkp_perc ~ ano, data = amr)
+lm.resistence <- lm(resistencias_crkp_perc ~ ano, data = amr2014_2020)
 # Summary in table form
 tidy(lm.resistence, conf.int = TRUE)
 # Creates a new data frame with the original data and the model values added
@@ -61,7 +64,7 @@ ggplot(lm.resistance_dt) +
 
 ## Consumption vs. Resistance -----
 # Linear regression between consumption and resistance
-lm.resist.comsump <- lm(resistencias_crkp_perc ~ consumo_ddd_hab_day, data = amr)
+lm.resist.comsump <- lm(resistencias_crkp_perc ~ consumo_ddd_hab_day, data = amr2014_2020)
 # Summary in table form
 tidy(lm.resist.comsump, conf.int = TRUE)
 # Creates a new data frame with the original data and the model values added
@@ -76,7 +79,7 @@ ggplot(lm.resist.comsump_dt) +
 # Log-linear model regression --------------------------------------------------
 ## Consumption -----
 # Log-Linear regression between consumption and time
-lm.comsumption.log <- lm(log(consumo_ddd_hab_day) ~ ano, data = amr)
+lm.comsumption.log <- lm(log(consumo_ddd_hab_day) ~ ano, data = amr2014_2020)
 # Summary in table form
 tidy(lm.comsumption.log, exponentiate = TRUE, conf.int = TRUE)
 # Creates a new data frame with the original data and the model values added
@@ -90,7 +93,7 @@ ggplot(lm.comsumption.log_dt) +
 
 ## Resistance -----
 # Log-Linear regression between resistance and time
-lm.resistence.log <- lm(log(resistencias_crkp_perc) ~ ano, data = amr)
+lm.resistence.log <- lm(log(resistencias_crkp_perc) ~ ano, data = amr2014_2020)
 # Summary in table form
 tidy(lm.resistence.log, exponentiate = TRUE, conf.int = TRUE)
 # Creates a new data frame with the original data and the model values added
@@ -104,7 +107,7 @@ ggplot(lm.resistance.log_dt) +
 
 ## Consumption vs. Resistance -----
 # Log-log regression between consumption and resistance
-lm.resist.comsump.log <- lm(log(resistencias_crkp_perc) ~ log(consumo_ddd_hab_day), data = amr)
+lm.resist.comsump.log <- lm(log(resistencias_crkp_perc) ~ log(consumo_ddd_hab_day), data = amr2014_2020)
 # Summary in table form
 tidy(lm.resist.comsump.log, exponentiate = TRUE, conf.int = TRUE)
 # Creates a new data frame with the original data and the model values added
