@@ -153,6 +153,9 @@ server <- function(input, output) {
     
     output$consumoPlotMesHosp <- renderPlot({
         
+        ## major problem: some hospitals report quartely, others montlhy!
+        ## automatization of frequencies is required, or median input for missing values
+        
         df2 <- df_auto[c("Período","DDD.Consumidas.de.Carbapenemes","Hospital")]
         df2 <- subset(df2, Hospital == input$hospital) #futuramente adicionar (... & Bacteria == input$bacteria & Antibiotic == input$antibiotic)
         df2 <- aggregate(df2$DDD.Consumidas.de.Carbapenemes,
