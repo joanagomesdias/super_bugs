@@ -102,38 +102,15 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
 
-     
-    ## fazer um dataset ano/mes e criar uma time-series de quarter/year
-    #df2 <- read.csv("C:\\Users\\bmace\\OneDrive\\Formação\\PhD\\Aulas\\LabHIDA\\Superbugs\\dataset_amr_data.csv", sep=";", dec=".")
-    #colnames(df2)[colnames(df2) == "ï..data"] <- "data"
-        #library(zoo)
-    #df2$data <- as.Date(as.yearmon(df2$data, "%Y/%m"), format="%Y/%m", frac = 1)
-    
-    
-
-    ## test dataset 
-    #df_test <- df[c(1,5)]
-    
-    ## Forecast consumption by input
-    #head(df3)
-    #ds_ts <- ts(df3, start=2017, frequency=12)
-    #f <- decompose(ds_ts)
-    #plot(f)
-    #plot(ds_ts)
-    #fit <- auto.arima(ds_ts)
-    #plot(forecast(fit, h=100))
-    
-    
+    ## Intermediate dataset according to inputs
+         
     ## Regression on resistance % by input
-    
-    
-    
+            
     ## New dataset with consumption, regression, additional costs and deaths by input
-    
-    
-    
+        
     ## Graphical outputs
    
+## Plot on ECDC consumption data
 #    output$consumoPlot <- renderPlot({
 #        # generate bins based on input$bins from ui.R
 #        x1    <- df$ano[df$ano <= input$ano & df$bacteria == input$bacteria & df$antibiotic == input$antibiotic]
