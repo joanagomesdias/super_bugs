@@ -69,10 +69,18 @@ ui <- fluidPage(
                 selectize = TRUE,
                 width = NULL,
                 size = NULL),
-            selectInput(
+            numericInput(
                 inputId = "ano", 
-                label = "Select forecast until end of year:", 
-                choices = 2021:ano_max)
+                label = "Select forecast year (2021 - 2030):", 
+                value = 2021,
+                min = 2021,
+                max = 2030,
+                step = 1,
+                width = NULL)
+#            selectInput(
+#                inputId = "ano", 
+#                label = "Select forecast until end of year:", 
+#                choices = 2021:ano_max)
             
         ),
 
