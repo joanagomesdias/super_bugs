@@ -217,7 +217,7 @@ server <- function(input, output) {
         x0 <- (as.numeric(input$ano) - 2021) * 12 + (12-n.months) #+2 porque faltam 2 meses de dados reais no ultimo ano... automatizar! E o max.year criar para o ano máximo de dados tbm
         xmin <- 2017
         xmax <- as.numeric(input$ano) + 1
-        plot(forecast(fit, h=x0, xreg=fourier(ds_ts, K=6, h=x0)), main=paste("Forecast ",input$antibiotic, " DDD by Hospital and month with ARIMA"))
+        plot(forecast(fit, h=x0, xreg=fourier(ds_ts, K=6, h=x0)), main=paste("Forecast ",input$antibiotic, " DDD by Hospital and month with ARIMA and Fourier"))
         abline(v=end.date, col="blue", lwd=0.5, lty=2)
         
         Forecast.all.hospitals <- forecast(fit, h=x0, xreg=fourier(ds_ts, K=6, h=x0))
@@ -273,7 +273,7 @@ server <- function(input, output) {
         Forecast.one.hospital <- forecast(fit.b, h=x0, xreg=fourier(ds_ts.b, K=6, h=x0))
         df.forecast.one <- as.data.frame(Forecast.one.hospital)
         
-        plot(forecast(fit.b, h=x0, xreg=fourier(ds_ts.b, K=6, h=x0)), main=paste("Forecast ",input$antibiotic, " DDD by Hospital and month with ARIMA","\n","(",input$hospital,")"), xlim=c(xmin,xmax))
+        plot(forecast(fit.b, h=x0, xreg=fourier(ds_ts.b, K=6, h=x0)), main=paste("Forecast ",input$antibiotic, " DDD by Hospital and month with ARIMA and Fourier","\n","(",input$hospital,")"), xlim=c(xmin,xmax))
 #test        plot(forecast(fit.b, h=x0, xreg=fourier(ds_ts.b, K=6, h=x0)), main=paste("FOrecast DDD by Hospital and month with ARIMA","\n","HospX"), xlim=c(xmin,xmax))
         abline(v=end.date, col="blue", lwd=0.5, lty=2)
         
@@ -330,7 +330,7 @@ server <- function(input, output) {
         end.date <- 2021 + (n.months/12) # automatizar
         
         # draw the histogram with the specified number of bins
-        plot(x3, y.norm, col = "black", border = 'white', main=paste("Forecast patients on ",input$antibiotic," at national level"), type="l", xlim=c(xmin,xmax), ylim=c(ymin,ymax), lwd=1)+
+        plot(x3, y.norm, col = "black", border = 'white', main=paste("Forecast patients on ",input$antibiotic," by year at national level"), type="l", xlim=c(xmin,xmax), ylim=c(ymin,ymax), lwd=1)+
             lines(x3, y.low)+
             lines(x3, y.high)+
             polygon(c(x3, rev(x3)), c(y.low, rev(y.high)), col = "gray85")+
@@ -355,7 +355,7 @@ server <- function(input, output) {
         end.date <- 2021 + (n.months/12) # automatizar
         
         # draw the histogram with the specified number of bins
-        plot(x4, y.norm, col = "black", border = 'white', main=paste("Forecast patients with ",input$bacteria," resistant to ",input$antibiotic," at national level"), type="l", xlim=c(xmin,xmax), ylim=c(ymin,ymax), lwd=1)+
+        plot(x4, y.norm, col = "black", border = 'white', main=paste("Forecast patients with ",input$bacteria," resistant to ",input$antibiotic," by year at national level"), type="l", xlim=c(xmin,xmax), ylim=c(ymin,ymax), lwd=1)+
             lines(x4, y.low)+
             lines(x4, y.high)+
             polygon(c(x4, rev(x4)), c(y.low, rev(y.high)), col = "gray85")+
@@ -370,7 +370,7 @@ server <- function(input, output) {
         xmin <- 2017
         xmax <- as.numeric(input$ano) + 1
         # draw the histogram with the specified number of bins
-        barplot(y5, names.arg=x5, col = 'darkgray', border = 'white', main=paste("Additional costs for ",input$bacteria," patients resistant to ",input$antibiotic," at national level"), xlab="ano", ylab="custos", ylim=c(0,100000000))
+        barplot(y5, names.arg=x5, col = 'darkgray', border = 'white', main=paste("Additional costs for ",input$bacteria," patients resistant to ",input$antibiotic," by year at national level"), xlab="ano", ylab="custos", ylim=c(0,100000000))
     })
     
     output$mortesPlot <- renderPlot({
@@ -380,7 +380,7 @@ server <- function(input, output) {
         xmin <- 2017
         xmax <- as.numeric(input$ano) + 1
         # draw the histogram with the specified number of bins
-        barplot(y6, names.arg=x6, col = 'darkgray', border = 'white', main=paste("Additional deaths for ",input$bacteria," patients resistant to ",input$antibiotic," at national level"), xlab="ano", ylab="mortes", ylim=c(0,10000))
+        barplot(y6, names.arg=x6, col = 'darkgray', border = 'white', main=paste("Additional deaths for ",input$bacteria," patients resistant to ",input$antibiotic," by year at national level"), xlab="ano", ylab="mortes", ylim=c(0,10000))
         
     })
     
