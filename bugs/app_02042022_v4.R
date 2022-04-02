@@ -49,7 +49,7 @@ n.months <- 10 #maximum month of last year
     
 
 #load dataset manual from ECDC
-df <- read.csv("C:\\Users\\bmace\\OneDrive\\Formação\\PhD\\Aulas\\LabHIDA\\Superbugs\\dataset_amr.csv", sep=";", dec=".")
+df <- read.csv("https://raw.githubusercontent.com/joanagomesdias/super_bugs/main/data/dataset_amr.csv", sep=";", dec=".")
 colnames(df)[colnames(df) == "ï..ano"] <- "ano"
 
 ano_max <- max(df$ano)
