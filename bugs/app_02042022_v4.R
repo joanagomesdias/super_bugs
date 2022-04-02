@@ -293,7 +293,7 @@ server <- function(input, output) {
         # xmax <- 2026
         ymin <- 0
         ymax <- max(df$ymax_resist[df$ano <= input$ano & df$bacteria == input$bacteria & df$antibiotic == input$antibiotic])
-        start.year <- substr(min(df_temp$data), 1, 4)
+        start.year <- substr(min(df$ano), 1, 4)
         end.date <- 2021 + (n.months/12) # automatizar
         
         # draw the histogram with the specified number of bins
@@ -326,7 +326,7 @@ server <- function(input, output) {
         xmax <- as.numeric(input$ano) + 1
         ymin <- 0
         ymax <- max(df$ymax_n[df$ano <= input$ano & df$bacteria == input$bacteria & df$antibiotic == input$antibiotic])
-        start.year <- substr(min(df_temp$data), 1, 4)
+        start.year <- substr(min(df$ano), 1, 4)
         end.date <- 2021 + (n.months/12) # automatizar
         
         # draw the histogram with the specified number of bins
@@ -351,7 +351,7 @@ server <- function(input, output) {
         xmax <- as.numeric(input$ano) + 1
         ymin <- 0
         ymax <- max(df$ymax_n[df$ano <= input$ano & df$bacteria == input$bacteria & df$antibiotic == input$antibiotic])
-        start.year <- substr(min(df_temp$data), 1, 4)
+        start.year <- substr(min(df$ano), 1, 4)
         end.date <- 2021 + (n.months/12) # automatizar
         
         # draw the histogram with the specified number of bins
