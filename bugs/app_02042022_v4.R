@@ -55,6 +55,22 @@ colnames(df)[colnames(df) == "ï..ano"] <- "ano"
 ano_max <- max(df$ano)
 
 
+# Regressao log consumption vs resistance
+plot(df$consumo_ddd_hab_day, df$resistencias_crkp_perc, main="Exponential decay", xlim=c(0,0.15), ylim=c(0,1))
+#fit the model
+#view the output of the model
+summary(model)
+#Formula
+#ln(Y)=2.0255-55.3068*X
+#Y <- exp(2.0255)-exp(55.3068)*exp(X)
+df_log <- na.omit(df[c("consumo_ddd_hab_day","resistencias_crkp_perc")])
+exponential.model <- lm(log(df_log$resistencias_crkp_perc)~ df_log$consumo_ddd_hab_day)
+summary(exponential.model)
+g0 <- ggplot(df_log, aes(consumo_ddd_hab_day, resistencias_crkp_perc)) + geom_line() + geom_area(alpha=0.3) +xlim(0,0.15) + ylim(0,1)
+g0 + stat_smooth(method="lm",formula=y~log(x),fill="red",fullrange=TRUE)
+
+
+
 # Define UI for application that draws a histogram
 ui <- fluidPage(
 
@@ -217,7 +233,7 @@ server <- function(input, output) {
         x0 <- (as.numeric(input$ano) - 2021) * 12 + (12-n.months) #+2 porque faltam 2 meses de dados reais no ultimo ano... automatizar! E o max.year criar para o ano máximo de dados tbm
         xmin <- 2017
         xmax <- as.numeric(input$ano) + 1
-        plot(forecast(fit, h=x0, xreg=fourier(ds_ts, K=6, h=x0)), main=paste("Forecast ",input$antibiotic, " DDD by Hospital and month with ARIMA and Fourier"))
+        plot(forecast(fit, h=x0, xreg=fourier(ds_ts, K=6, h=x0)), main=paste("Forecast ",input$antibiotic, " DDD all Hospitals by month with ARIMA and Fourier"))
         abline(v=end.date, col="blue", lwd=0.5, lty=2)
         
         Forecast.all.hospitals <- forecast(fit, h=x0, xreg=fourier(ds_ts, K=6, h=x0))
@@ -306,7 +322,7 @@ server <- function(input, output) {
             #geom_ribbon(aes(ymin = y.low, ymax = y.high), fill = "grey", alpha = .5)+
             #theme_bw()
         
-        plot(x2, y.norm, col = "black", border = 'white', main=paste("Forecast % ",input$bacteria," resistant to ",input$antibiotic," at national level"), type="l", xlim=c(xmin,xmax), ylim=c(ymin,ymax), lwd=1)+
+        plot(x2, y.norm, col = "black", border = 'white', main=paste("Forecast % ",input$bacteria," resistant to ",input$antibiotic," by year at national level"), type="l", xlim=c(xmin,xmax), ylim=c(ymin,ymax), lwd=1)+
             lines(x2, y.low)+
             lines(x2, y.high)+
             polygon(c(x2, rev(x2)), c(y.low, rev(y.high)), col = "gray85")+
