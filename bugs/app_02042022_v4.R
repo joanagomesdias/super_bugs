@@ -56,10 +56,7 @@ ano_max <- max(df$ano)
 
 
 # Regressao log consumption vs resistance
-plot(df$consumo_ddd_hab_day, df$resistencias_crkp_perc, main="Exponential decay", xlim=c(0,0.15), ylim=c(0,1))
-#fit the model
-#view the output of the model
-summary(model)
+plot(df$consumo_ddd_hab_day, df$resistencias_crkp_perc, main="Consumo CR vs Resistencias CRKP", xlim=c(0,0.15), ylim=c(0,1))
 #Formula
 #ln(Y)=2.0255-55.3068*X
 #Y <- exp(2.0255)-exp(55.3068)*exp(X)
